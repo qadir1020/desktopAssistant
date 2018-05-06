@@ -45,6 +45,9 @@ def myCommand():
 
 def assistant(command):
     "if statements for executing commands"
+    
+    
+    
 
     if 'open reddit' in command:
         reg_ex = re.search('open reddit (.*)', command)
@@ -54,6 +57,33 @@ def assistant(command):
             url = url + 'r/' + subreddit
         webbrowser.open(url)
         print('Done!')
+        
+    elif 'video of' in command:                                                            #what happens when vid keyword is recognized
+
+              #  words = message.split()
+              #  del words[0:2]
+               # st = ' '.join(words)
+                #print('Video Results for: '+str(st))
+                #url='https://www.youtube.com/results?search_query='+st
+                #webbrowser.open(url)
+                #v.speak('Video Results for: '+str(st))
+                
+            reg_ex = re.search('video of (.+)', command)
+            if reg_ex:
+                domain = reg_ex.group(1)
+                url = 'https:www.youtube.com/results?search_query=' + domain
+                webbrowser.open(url)
+                print('Done!')
+                    
+    elif 'open paint' in command:                                                        #what happens when stoplst keyword is recognized
+                                                              #what happens when paint keyword is recognized
+        os.system('mspaint')  
+        
+    elif 'open calculator' in command:                                                        #what happens when stoplst keyword is recognized
+                                                              #what happens when paint keyword is recognized
+        os.system('calc')  
+        
+   
 
     elif 'open website' in command:
         reg_ex = re.search('open website (.+)', command)
@@ -81,9 +111,9 @@ def assistant(command):
         reg_ex = re.search('current weather in (.*)', command)
         if reg_ex:
             city = reg_ex.group(1)
-            weather = Weather()
+            weather = Weather(city)
             location = weather.lookup_by_location(city)
-            condition = location.condition()
+            condition = location.condition(city)
             talkToMe('The Current weather in %s is %s The tempeture is %.1f degree' % (city, condition.text(), (int(condition.temp())-32)/1.8))
 
     elif 'weather forecast in' in command:
@@ -92,7 +122,7 @@ def assistant(command):
             city = reg_ex.group(1)
             weather = Weather()
             location = weather.lookup_by_location(city)
-            forecasts = location.forecast()
+            forecasts = location.forecast(city)
             for i in range(0,3):
                 talkToMe('On %s will it %s. The maximum temperture will be %.1f degree.'
                          'The lowest temperature will be %.1f degrees.' % (forecasts[i].date(), forecasts[i].text(), (int(forecasts[i].high())-32)/1.8, (int(forecasts[i].low())-32)/1.8))
@@ -131,7 +161,7 @@ def assistant(command):
 
 
 talkToMe('I am ready for your command')
-
 #loop to continue executing multiple commands
 while True:
-    assistant(myCommand())
+      assistant(myCommand())
+        
